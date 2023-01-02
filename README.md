@@ -1,4 +1,4 @@
-# expenses_app
+# ExpensesApp
 
 A Flutter project to calculate expenses.
 
