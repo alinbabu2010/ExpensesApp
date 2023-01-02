@@ -1,5 +1,6 @@
 import 'package:expenses_app/transaction.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 void main() {
   runApp(const MyApp());
@@ -82,7 +83,7 @@ class MyHomePage extends StatelessWidget {
                             ),
                           ),
                           Text(
-                            transaction.date.toString(),
+                            DateFormat().format(transaction.date),
                             style: const TextStyle(
                               color: Colors.grey,
                               fontSize: 12,
