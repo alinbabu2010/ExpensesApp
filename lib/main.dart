@@ -11,7 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       title: 'Flutter App',
       home: MyHomePage(),
     );
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  MyHomePage({Key? key}) : super(key: key);
+  const MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -27,18 +27,22 @@ class MyHomePage extends StatelessWidget {
       appBar: AppBar(
         title: const Text("Flutter App"),
       ),
-      body: Column(
-          mainAxisAlignment: MainAxisAlignment.start, children: [
-        Container(
-          width: double.infinity,
-          child: const Card(
-            color: Colors.blueAccent,
-            elevation: 5,
-            child: Text("Chart!"),
-          ),
-        ),
-        const UserTransactions()
-      ]),
+      body: SingleChildScrollView(
+        child: Column(
+            //mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.stretch,
+            children: [
+              Container(
+                width: double.infinity,
+                child: const Card(
+                  color: Colors.blueAccent,
+                  elevation: 5,
+                  child: Text("Chart!"),
+                ),
+              ),
+              const UserTransactions()
+            ]),
+      ),
     );
   }
 }
