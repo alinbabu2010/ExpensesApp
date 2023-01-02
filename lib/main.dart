@@ -1,3 +1,4 @@
+import 'package:expenses_app/transaction.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -10,7 +11,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       title: 'Flutter App',
       home: MyHomePage(),
     );
@@ -18,7 +19,14 @@ class MyApp extends StatelessWidget {
 }
 
 class MyHomePage extends StatelessWidget {
-  const MyHomePage({Key? key}) : super(key: key);
+  final List<Transaction> transactions = [
+    Transaction(
+        id: 't1', title: "New Shoes", amount: 1200, date: DateTime.now()),
+    Transaction(
+        id: 't2', title: "Groceries", amount: 2500, date: DateTime.now()),
+  ];
+
+  MyHomePage({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -38,9 +46,54 @@ class MyHomePage extends StatelessWidget {
                 child: Text("Chart!"),
               ),
             ),
-            const Card(
-              color: Colors.lime,
-              child: Text("List of transactions"),
+            Column(
+              children: transactions.map((transaction) {
+                return Card(
+                  child: Row(
+                    children: [
+                      Container(
+                        margin: const EdgeInsets.symmetric(
+                          vertical: 10,
+                          horizontal: 15,
+                        ),
+                        decoration: BoxDecoration(
+                            border: Border.all(
+                          color: Colors.purple,
+                          width: 2,
+                        )),
+                        padding: const EdgeInsets.all(10),
+                        child: Text(
+                          transaction.amount.toString(),
+                          style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 20,
+                              color: Colors.purple),
+                        ),
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            transaction.title,
+                            style: const TextStyle(
+                              fontWeight: FontWeight.bold,
+                              fontSize: 16,
+                            ),
+                          ),
+                          Text(
+                            transaction.date.toString(),
+                            style: const TextStyle(
+                              color: Colors.grey,
+                              fontSize: 12,
+                            ),
+                          )
+                        ],
+                      )
+                    ],
+                  ),
+                );
+              }).toList(),
             )
           ]),
     );
