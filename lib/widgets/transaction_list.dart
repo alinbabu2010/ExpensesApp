@@ -1,5 +1,5 @@
-import 'package:expenses_app/widgets/transaction_item.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
@@ -32,7 +32,32 @@ class TransactionList extends StatelessWidget {
           : ListView.builder(
               itemBuilder: (context, index) {
                 var transaction = transactions[index];
-                return TransactionItem(transaction: transaction);
+                return Card(
+                  elevation: 5,
+                  margin: const EdgeInsets.symmetric(
+                    vertical: 8,
+                    horizontal: 5,
+                  ),
+                  child: ListTile(
+                    leading: CircleAvatar(
+                      radius: 30,
+                      child: Padding(
+                        padding: const EdgeInsets.all(10),
+                        child: FittedBox(
+                          child:
+                              Text("₹${transaction.amount.toStringAsFixed(2)}"),
+                        ),
+                      ),
+                    ),
+                    title: Text(
+                      transaction.title,
+                      style: Theme.of(context).textTheme.titleMedium,
+                    ),
+                    subtitle: Text(
+                      DateFormat.yMMMd().format(transaction.date),
+                    ),
+                  ),
+                );
               },
               itemCount: transactions.length,
             ),
