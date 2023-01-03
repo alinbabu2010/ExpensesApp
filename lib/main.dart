@@ -1,5 +1,10 @@
-import 'package:expenses_app/widgets/user_transactions.dart';
+import 'dart:math';
+
+import 'package:expenses_app/widgets/new_transactions.dart';
+import 'package:expenses_app/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+
+import 'models/transaction.dart';
 
 void main() {
   runApp(const MyApp());
@@ -18,8 +23,48 @@ class MyApp extends StatelessWidget {
   }
 }
 
-class MyHomePage extends StatelessWidget {
+class MyHomePage extends StatefulWidget {
   const MyHomePage({Key? key}) : super(key: key);
+
+  @override
+  State<MyHomePage> createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
+  final List<Transaction> _userTransaction = [
+    Transaction(
+      id: 't1',
+      title: "New Shoes",
+      amount: 1200,
+      date: DateTime.now(),
+    ),
+    Transaction(
+      id: 't2',
+      title: "Groceries",
+      amount: 2500,
+      date: DateTime.now(),
+    ),
+  ];
+
+  void _addNewTransaction(String title, double amount) {
+    final newTransaction = Transaction(
+      id: Random.secure().toString(),
+      title: title,
+      amount: amount,
+      date: DateTime.now(),
+    );
+    setState(() {
+      _userTransaction.add(newTransaction);
+    });
+  }
+
+  void showAddTransactionSheet(BuildContext context) {
+    showModalBottomSheet(
+        context: context,
+        builder: (_) {
+          return NewTransaction(addTransactionHandler: _addNewTransaction);
+        });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -28,7 +73,7 @@ class MyHomePage extends StatelessWidget {
         title: const Text("Flutter App"),
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () => showAddTransactionSheet(context),
             icon: const Icon(Icons.add),
           ),
         ],
@@ -46,11 +91,11 @@ class MyHomePage extends StatelessWidget {
                   child: Text("Chart!"),
                 ),
               ),
-              const UserTransactions()
+              TransactionList(_userTransaction),
             ]),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () {},
+        onPressed: () => showAddTransactionSheet(context),
         child: const Icon(Icons.add),
       ),
       floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
