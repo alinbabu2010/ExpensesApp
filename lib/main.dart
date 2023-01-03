@@ -24,6 +24,20 @@ class MyApp extends StatelessWidget {
           primarySwatch: Colors.deepOrange,
           accentColor: Colors.amber,
         ),
+        fontFamily: 'Quicksand',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              titleMedium: const TextStyle(
+                fontFamily: 'Open Sans',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+        appBarTheme: const AppBarTheme(
+          titleTextStyle: TextStyle(
+              fontFamily: 'Open Sans',
+              fontSize: 20,
+              fontWeight: FontWeight.bold),
+        ),
       ),
       home: const MyHomePage(),
     );

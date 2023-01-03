@@ -42,10 +42,7 @@ class TransactionItem extends StatelessWidget {
             children: [
               Text(
                 transaction.title,
-                style: const TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
+                style: Theme.of(context).textTheme.titleMedium,
               ),
               Text(
                 DateFormat().format(transaction.date),
