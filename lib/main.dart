@@ -87,6 +87,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransactions(String id) {
+    setState(() {
+      _userTransaction.removeWhere((transaction) => transaction.id == id);
+    });
+  }
+
   void showAddTransactionSheet(BuildContext context) {
     showModalBottomSheet(
         context: context,
@@ -113,7 +119,7 @@ class _MyHomePageState extends State<MyHomePage> {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               Chart(recentTransactions: _recentTransactions),
-              TransactionList(_userTransaction),
+              TransactionList(_userTransaction, _deleteTransactions),
             ]),
       ),
       floatingActionButton: FloatingActionButton(
