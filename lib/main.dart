@@ -2,10 +2,16 @@ import 'package:expenses_app/widgets/chart.dart';
 import 'package:expenses_app/widgets/new_transactions.dart';
 import 'package:expenses_app/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'models/transaction.dart';
 
 void main() {
+  WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitDown,
+    DeviceOrientation.portraitUp,
+  ]);
   runApp(const MyApp());
 }
 
@@ -121,7 +127,7 @@ class _MyHomePageState extends State<MyHomePage> {
               height: (MediaQuery.of(context).size.height -
                       appBar.preferredSize.height -
                       MediaQuery.of(context).padding.top) *
-                  0.4,
+                  0.3,
               child: Chart(recentTransactions: _recentTransactions),
             ),
             SizedBox(
