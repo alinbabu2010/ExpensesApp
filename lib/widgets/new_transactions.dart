@@ -63,8 +63,8 @@ class _NewTransactionState extends State<NewTransaction> {
               decoration: const InputDecoration(labelText: "Amount"),
               controller: _amountController,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => _submitData(),
-              // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
+              textInputAction: TextInputAction.next
+                // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
               // onChanged: (value) => amountInput = value,
             ),
             SizedBox(
