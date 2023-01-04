@@ -14,16 +14,17 @@ class NewTransaction extends StatefulWidget {
 }
 
 class _NewTransactionState extends State<NewTransaction> {
-  final titleController = TextEditingController();
-  final amountController = TextEditingController();
+  final _titleController = TextEditingController();
+  final _amountController = TextEditingController();
   DateTime? _selectedDate;
 
   /// To submit data to [widget.addTransactionHandler] using text editing controller
-  void submitData() {
-    final enteredTitle = titleController.text;
-    final enteredAmount = double.tryParse(amountController.text) ?? 0.0;
-    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null)
+  void _submitData() {
+    final enteredTitle = _titleController.text;
+    final enteredAmount = double.tryParse(_amountController.text) ?? 0.0;
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null) {
       return;
+    }
     widget.addTransactionHandler(enteredTitle, enteredAmount, _selectedDate);
     Navigator.of(context).pop();
   }
@@ -54,15 +55,15 @@ class _NewTransactionState extends State<NewTransaction> {
           children: [
             TextField(
               decoration: const InputDecoration(labelText: "Title"),
-              controller: titleController,
+              controller: _titleController,
               textInputAction: TextInputAction.next,
               // onChanged: (value) => titleInput = value,
             ),
             TextField(
               decoration: const InputDecoration(labelText: "Amount"),
-              controller: amountController,
+              controller: _amountController,
               keyboardType: TextInputType.number,
-              onSubmitted: (_) => submitData(),
+              onSubmitted: (_) => _submitData(),
               // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
               // onChanged: (value) => amountInput = value,
             ),
@@ -94,7 +95,7 @@ class _NewTransactionState extends State<NewTransaction> {
               ),
             ),
             ElevatedButton(
-              onPressed: submitData,
+              onPressed: _submitData,
               child: const Text("Add transaction"),
             )
           ],

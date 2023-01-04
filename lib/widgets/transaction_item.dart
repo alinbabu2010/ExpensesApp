@@ -3,6 +3,8 @@ import 'package:intl/intl.dart';
 
 import '../models/transaction.dart';
 
+/// Widget is used earlier for transaction list item but keeping thee code
+/// reference purposes
 class TransactionItem extends StatelessWidget {
   const TransactionItem({
     Key? key,
