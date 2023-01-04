@@ -1,5 +1,3 @@
-import 'dart:math';
-
 import 'package:expenses_app/widgets/chart.dart';
 import 'package:expenses_app/widgets/new_transactions.dart';
 import 'package:expenses_app/widgets/transaction_list.dart';
@@ -77,7 +75,7 @@ class _MyHomePageState extends State<MyHomePage> {
 
   void _addNewTransaction(String title, double amount, DateTime chosenDate) {
     final newTransaction = Transaction(
-      id: Random.secure().toString(),
+      id: DateTime.now().toString(),
       title: title,
       amount: amount,
       date: chosenDate,
