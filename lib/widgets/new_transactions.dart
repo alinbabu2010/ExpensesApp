@@ -22,8 +22,9 @@ class _NewTransactionState extends State<NewTransaction> {
   void submitData() {
     final enteredTitle = titleController.text;
     final enteredAmount = double.tryParse(amountController.text) ?? 0.0;
-    if (enteredTitle.isEmpty || enteredAmount <= 0) return;
-    widget.addTransactionHandler(enteredTitle, enteredAmount);
+    if (enteredTitle.isEmpty || enteredAmount <= 0 || _selectedDate == null)
+      return;
+    widget.addTransactionHandler(enteredTitle, enteredAmount, _selectedDate);
     Navigator.of(context).pop();
   }
 
