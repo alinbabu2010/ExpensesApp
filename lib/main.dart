@@ -2,7 +2,6 @@ import 'package:expenses_app/widgets/chart.dart';
 import 'package:expenses_app/widgets/new_transactions.dart';
 import 'package:expenses_app/widgets/transaction_list.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 
 import 'models/transaction.dart';
 
@@ -104,8 +103,8 @@ class _MyHomePageState extends State<MyHomePage> {
 
   @override
   Widget build(BuildContext context) {
-    final isLandScape =
-        MediaQuery.of(context).orientation == Orientation.landscape;
+    final mediaQuery = MediaQuery.of(context);
+    final isLandScape = mediaQuery.orientation == Orientation.landscape;
 
     final appBar = AppBar(
       title: const Text("Personal Expenses"),
@@ -118,9 +117,9 @@ class _MyHomePageState extends State<MyHomePage> {
     );
 
     final transactionListWidget = SizedBox(
-      height: (MediaQuery.of(context).size.height -
+      height: (mediaQuery.size.height -
               appBar.preferredSize.height -
-              MediaQuery.of(context).padding.top) *
+              mediaQuery.padding.top) *
           0.7,
       child: TransactionList(
         _userTransaction,
@@ -130,9 +129,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     SizedBox chartWidget(BuildContext context, double screenRatio) {
       return SizedBox(
-        height: (MediaQuery.of(context).size.height -
+        height: (mediaQuery.size.height -
                 appBar.preferredSize.height -
-                MediaQuery.of(context).padding.top) *
+                mediaQuery.padding.top) *
             screenRatio,
         child: Chart(recentTransactions: _recentTransactions),
       );
