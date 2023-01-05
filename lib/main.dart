@@ -119,8 +119,9 @@ class _MyHomePageState extends State<MyHomePage> {
 
     final transactionListWidget = SizedBox(
       height: (MediaQuery.of(context).size.height -
-          appBar.preferredSize.height -
-          MediaQuery.of(context).padding.top),
+              appBar.preferredSize.height -
+              MediaQuery.of(context).padding.top) *
+          0.7,
       child: TransactionList(
         _userTransaction,
         _deleteTransactions,
