@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:expenses_app/widgets/chart.dart';
 import 'package:expenses_app/widgets/new_transactions.dart';
 import 'package:expenses_app/widgets/transaction_list.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'models/transaction.dart';
@@ -27,12 +28,12 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-          titleMedium: const TextStyle(
-            fontFamily: 'Open Sans',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+              titleMedium: const TextStyle(
+                fontFamily: 'Open Sans',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
               fontFamily: 'Open Sans',
@@ -118,10 +119,25 @@ class _MyHomePageState extends State<MyHomePage> {
       ],
     );
 
+    final navigationBar = CupertinoNavigationBar(
+      middle: const Text("Personal Expenses"),
+      trailing: Row(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          GestureDetector(
+            onTap: () => showAddTransactionSheet(context),
+            child: const Icon(CupertinoIcons.add),
+          )
+        ],
+      ),
+    );
+
+    final appBarHeight = Platform.isIOS
+        ? navigationBar.preferredSize.height
+        : appBar.preferredSize.height;
+
     final transactionListWidget = SizedBox(
-      height: (mediaQuery.size.height -
-          appBar.preferredSize.height -
-          mediaQuery.padding.top) *
+      height: (mediaQuery.size.height - appBarHeight - mediaQuery.padding.top) *
           0.7,
       child: TransactionList(
         _userTransaction,
@@ -131,49 +147,56 @@ class _MyHomePageState extends State<MyHomePage> {
 
     SizedBox chartWidget(BuildContext context, double screenRatio) {
       return SizedBox(
-        height: (mediaQuery.size.height -
-            appBar.preferredSize.height -
-            mediaQuery.padding.top) *
-            screenRatio,
+        height:
+            (mediaQuery.size.height - appBarHeight - mediaQuery.padding.top) *
+                screenRatio,
         child: Chart(recentTransactions: _recentTransactions),
       );
     }
 
-    return Scaffold(
-      appBar: appBar,
-      body: SingleChildScrollView(
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            if (isLandScape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const Text("Show Chart"),
-                  Switch.adaptive(
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      value: _showChart,
-                      onChanged: (value) {
-                        setState(() {
-                          _showChart = value;
-                        });
-                      }),
-                ],
-              ),
-            if (!isLandScape) chartWidget(context, 0.3),
-            if (!isLandScape) transactionListWidget,
-            if (isLandScape)
-              _showChart ? chartWidget(context, 0.7) : transactionListWidget,
-          ],
-        ),
-      ),
-      floatingActionButton: Platform.isIOS
-          ? Container()
-          : FloatingActionButton(
-              onPressed: () => showAddTransactionSheet(context),
-              child: const Icon(Icons.add),
+    final pageBody = SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.stretch,
+        children: [
+          if (isLandScape)
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                const Text("Show Chart"),
+                Switch.adaptive(
+                    activeColor: Theme.of(context).colorScheme.secondary,
+                    value: _showChart,
+                    onChanged: (value) {
+                      setState(() {
+                        _showChart = value;
+                      });
+                    }),
+              ],
             ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+          if (!isLandScape) chartWidget(context, 0.3),
+          if (!isLandScape) transactionListWidget,
+          if (isLandScape)
+            _showChart ? chartWidget(context, 0.7) : transactionListWidget,
+        ],
+      ),
     );
+
+    return Platform.isIOS
+        ? CupertinoPageScaffold(
+            navigationBar: navigationBar,
+            child: pageBody,
+          )
+        : Scaffold(
+            appBar: appBar,
+            body: pageBody,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    onPressed: () => showAddTransactionSheet(context),
+                    child: const Icon(Icons.add),
+                  ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
