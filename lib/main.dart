@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:expenses_app/widgets/chart.dart';
+import 'package:expenses_app/widgets/chart_switch.dart';
 import 'package:expenses_app/widgets/new_transactions.dart';
 import 'package:expenses_app/widgets/transaction_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -154,29 +155,18 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
 
+    void onSwitched(bool isSwitched) {
+      setState(() {
+        _showChart = isSwitched;
+      });
+    }
+
     final pageBody = SafeArea(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (isLandScape)
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Show Chart",
-                    style: Theme.of(context).textTheme.titleSmall,
-                  ),
-                  Switch.adaptive(
-                      activeColor: Theme.of(context).colorScheme.secondary,
-                      value: _showChart,
-                      onChanged: (value) {
-                        setState(() {
-                          _showChart = value;
-                        });
-                      }),
-                ],
-              ),
+            if (isLandScape) ChartSwitch(_showChart, onSwitched),
             if (!isLandScape) chartWidget(context, 0.3),
             if (!isLandScape) transactionListWidget,
             if (isLandScape)

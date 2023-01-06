@@ -71,9 +71,9 @@ class _NewTransactionState extends State<NewTransaction> {
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next
-                // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
-                // onChanged: (value) => amountInput = value,
-              ),
+                  // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
+                  // onChanged: (value) => amountInput = value,
+                  ),
               SizedBox(
                 height: 70,
                 child: Row(
