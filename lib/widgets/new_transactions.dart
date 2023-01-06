@@ -1,3 +1,4 @@
+import 'package:expenses_app/widgets/adaptive_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -70,9 +71,9 @@ class _NewTransactionState extends State<NewTransaction> {
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next
-                  // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
-                  // onChanged: (value) => amountInput = value,
-                  ),
+                // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
+                // onChanged: (value) => amountInput = value,
+              ),
               SizedBox(
                 height: 70,
                 child: Row(
@@ -84,19 +85,7 @@ class _NewTransactionState extends State<NewTransaction> {
                             : "PickedDate: ${DateFormat.yMMMd().format(_selectedDate!)}",
                       ),
                     ),
-                    TextButton(
-                      onPressed: () => _openDatePicker(),
-                      style: ButtonStyle(
-                        foregroundColor: MaterialStateProperty.all(
-                            Theme.of(context).primaryColor),
-                        textStyle: MaterialStateProperty.all(
-                          const TextStyle(
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                      ),
-                      child: const Text('Choose Date'),
-                    )
+                    AdaptiveButton('Choose Date', _openDatePicker)
                   ],
                 ),
               ),
