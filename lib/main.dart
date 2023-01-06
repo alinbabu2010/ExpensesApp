@@ -154,30 +154,35 @@ class _MyHomePageState extends State<MyHomePage> {
       );
     }
 
-    final pageBody = SingleChildScrollView(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: [
-          if (isLandScape)
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                const Text("Show Chart"),
-                Switch.adaptive(
-                    activeColor: Theme.of(context).colorScheme.secondary,
-                    value: _showChart,
-                    onChanged: (value) {
-                      setState(() {
-                        _showChart = value;
-                      });
-                    }),
-              ],
-            ),
-          if (!isLandScape) chartWidget(context, 0.3),
-          if (!isLandScape) transactionListWidget,
-          if (isLandScape)
-            _showChart ? chartWidget(context, 0.7) : transactionListWidget,
-        ],
+    final pageBody = SafeArea(
+      child: SingleChildScrollView(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
+          children: [
+            if (isLandScape)
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text(
+                    "Show Chart",
+                    style: Theme.of(context).textTheme.titleSmall,
+                  ),
+                  Switch.adaptive(
+                      activeColor: Theme.of(context).colorScheme.secondary,
+                      value: _showChart,
+                      onChanged: (value) {
+                        setState(() {
+                          _showChart = value;
+                        });
+                      }),
+                ],
+              ),
+            if (!isLandScape) chartWidget(context, 0.3),
+            if (!isLandScape) transactionListWidget,
+            if (isLandScape)
+              _showChart ? chartWidget(context, 0.7) : transactionListWidget,
+          ],
+        ),
       ),
     );
 
