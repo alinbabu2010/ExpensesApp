@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:expenses_app/widgets/adaptive_button.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
@@ -5,19 +7,47 @@ import 'package:intl/intl.dart';
 class NewTransaction extends StatefulWidget {
   final Function addTransactionHandler;
 
-  const NewTransaction({
+  NewTransaction({
     Key? key,
     required this.addTransactionHandler,
-  }) : super(key: key);
+  }) : super(key: key) {
+    log('Constructor NewTransaction widget');
+  }
 
   @override
-  State<NewTransaction> createState() => _NewTransactionState();
+  // ignore: no_logic_in_create_state
+  State<NewTransaction> createState() {
+    log('createState() NewTransaction widget');
+    return _NewTransactionState();
+  }
 }
 
 class _NewTransactionState extends State<NewTransaction> {
   final _titleController = TextEditingController();
   final _amountController = TextEditingController();
   DateTime? _selectedDate;
+
+  _NewTransactionState() {
+    log('Constructor _NewTransaction state');
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    log('_NewTransaction initState()');
+  }
+
+  @override
+  void didUpdateWidget(covariant NewTransaction oldWidget) {
+    super.didUpdateWidget(oldWidget);
+    log('_NewTransaction didUpdateWidget()');
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    log('_NewTransaction dispose()');
+  }
 
   /// To submit data to [widget.addTransactionHandler] using text editing controller
   void _submitData() {
@@ -71,9 +101,9 @@ class _NewTransactionState extends State<NewTransaction> {
                   controller: _amountController,
                   keyboardType: TextInputType.number,
                   textInputAction: TextInputAction.next
-                  // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
-                  // onChanged: (value) => amountInput = value,
-                  ),
+                // On iOS use 'const TextInputType.numberWithOptions(decimal: true)'
+                // onChanged: (value) => amountInput = value,
+              ),
               SizedBox(
                 height: 70,
                 child: Row(
