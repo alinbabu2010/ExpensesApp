@@ -161,16 +161,27 @@ class _MyHomePageState extends State<MyHomePage> {
       });
     }
 
+    List<Widget> buildLandscapeContent() {
+      return [
+        ChartSwitch(_showChart, onSwitched),
+        _showChart ? chartWidget(context, 0.7) : transactionListWidget,
+      ];
+    }
+
+    List<Widget> buildPortraitContent() {
+      return [
+        chartWidget(context, 0.3),
+        transactionListWidget,
+      ];
+    }
+
     final pageBody = SafeArea(
       child: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            if (isLandScape) ChartSwitch(_showChart, onSwitched),
-            if (!isLandScape) chartWidget(context, 0.3),
-            if (!isLandScape) transactionListWidget,
-            if (isLandScape)
-              _showChart ? chartWidget(context, 0.7) : transactionListWidget,
+            if (isLandScape) ...buildLandscapeContent(),
+            if (!isLandScape) ...buildPortraitContent()
           ],
         ),
       ),
