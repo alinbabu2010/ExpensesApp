@@ -30,12 +30,12 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-          titleMedium: const TextStyle(
-            fontFamily: 'Open Sans',
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+              titleMedium: const TextStyle(
+                fontFamily: 'Open Sans',
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
               fontFamily: 'Open Sans',
@@ -154,8 +154,8 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     SizedBox chartWidget(BuildContext context, double screenRatio) {
       return SizedBox(
         height:
-        (mediaQuery.size.height - appBarHeight - mediaQuery.padding.top) *
-            screenRatio,
+            (mediaQuery.size.height - appBarHeight - mediaQuery.padding.top) *
+                screenRatio,
         child: Chart(recentTransactions: _recentTransactions),
       );
     }
@@ -194,20 +194,20 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
-      navigationBar: navigationBar,
-      child: pageBody,
-    )
+            navigationBar: navigationBar,
+            child: pageBody,
+          )
         : Scaffold(
-      appBar: appBar,
-      body: pageBody,
-      floatingActionButton: Platform.isIOS
-          ? Container()
-          : FloatingActionButton(
-        onPressed: () => showAddTransactionSheet(context),
-        child: const Icon(Icons.add),
-      ),
-      floatingActionButtonLocation:
-      FloatingActionButtonLocation.centerFloat,
-    );
+            appBar: appBar,
+            body: pageBody,
+            floatingActionButton: Platform.isIOS
+                ? Container()
+                : FloatingActionButton(
+                    onPressed: () => showAddTransactionSheet(context),
+                    child: const Icon(Icons.add),
+                  ),
+            floatingActionButtonLocation:
+                FloatingActionButtonLocation.centerFloat,
+          );
   }
 }
