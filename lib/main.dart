@@ -56,7 +56,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  final List<Transaction> _userTransaction = List.empty();
+  final List<Transaction> _userTransaction = List.empty(growable: true);
 
   bool _showChart = false;
 
