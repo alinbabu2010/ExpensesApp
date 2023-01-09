@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 
 import 'package:expenses_app/widgets/chart.dart';
@@ -29,12 +30,12 @@ class MyApp extends StatelessWidget {
         ),
         fontFamily: 'Quicksand',
         textTheme: ThemeData.light().textTheme.copyWith(
-              titleMedium: const TextStyle(
-                fontFamily: 'Open Sans',
-                fontSize: 18,
-                fontWeight: FontWeight.bold,
-              ),
-            ),
+          titleMedium: const TextStyle(
+            fontFamily: 'Open Sans',
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
         appBarTheme: const AppBarTheme(
           titleTextStyle: TextStyle(
               fontFamily: 'Open Sans',
@@ -54,21 +55,8 @@ class MyHomePage extends StatefulWidget {
   State<MyHomePage> createState() => _MyHomePageState();
 }
 
-class _MyHomePageState extends State<MyHomePage> {
-  final List<Transaction> _userTransaction = [
-    // Transaction(
-    //   id: 't1',
-    //   title: "New Shoes",
-    //   amount: 1200,
-    //   date: DateTime.now(),
-    // ),
-    // Transaction(
-    //   id: 't2',
-    //   title: "Groceries",
-    //   amount: 2500,
-    //   date: DateTime.now(),
-    // ),
-  ];
+class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  final List<Transaction> _userTransaction = List.empty();
 
   bool _showChart = false;
 
@@ -103,6 +91,23 @@ class _MyHomePageState extends State<MyHomePage> {
         builder: (_) {
           return NewTransaction(addTransactionHandler: _addNewTransaction);
         });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    WidgetsBinding.instance.addObserver(this);
+  }
+
+  @override
+  void didChangeAppLifecycleState(AppLifecycleState state) {
+    log(state.name);
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    WidgetsBinding.instance.removeObserver(this);
   }
 
   @override
@@ -149,8 +154,8 @@ class _MyHomePageState extends State<MyHomePage> {
     SizedBox chartWidget(BuildContext context, double screenRatio) {
       return SizedBox(
         height:
-            (mediaQuery.size.height - appBarHeight - mediaQuery.padding.top) *
-                screenRatio,
+        (mediaQuery.size.height - appBarHeight - mediaQuery.padding.top) *
+            screenRatio,
         child: Chart(recentTransactions: _recentTransactions),
       );
     }
@@ -189,20 +194,20 @@ class _MyHomePageState extends State<MyHomePage> {
 
     return Platform.isIOS
         ? CupertinoPageScaffold(
-            navigationBar: navigationBar,
-            child: pageBody,
-          )
+      navigationBar: navigationBar,
+      child: pageBody,
+    )
         : Scaffold(
-            appBar: appBar,
-            body: pageBody,
-            floatingActionButton: Platform.isIOS
-                ? Container()
-                : FloatingActionButton(
-                    onPressed: () => showAddTransactionSheet(context),
-                    child: const Icon(Icons.add),
-                  ),
-            floatingActionButtonLocation:
-                FloatingActionButtonLocation.centerFloat,
-          );
+      appBar: appBar,
+      body: pageBody,
+      floatingActionButton: Platform.isIOS
+          ? Container()
+          : FloatingActionButton(
+        onPressed: () => showAddTransactionSheet(context),
+        child: const Icon(Icons.add),
+      ),
+      floatingActionButtonLocation:
+      FloatingActionButtonLocation.centerFloat,
+    );
   }
 }
